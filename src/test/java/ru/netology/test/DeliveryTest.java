@@ -29,7 +29,7 @@ public class DeliveryTest {
         var daysToAddForSecondMeeting = 6;
         var secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
         $("[data-test-id='city'] input").setValue(validUser.getCity());
-        $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.COMMAND + "a"), Keys.DELETE);
+        $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.CONTROL + "a"), Keys.DELETE);
         $("[data-test-id='date'] input").setValue(firstMeetingDate);
         $("[data-test-id='name'] input").setValue(validUser.getName());
         $("[data-test-id='phone'] input").setValue(validUser.getPhone());
@@ -37,16 +37,16 @@ public class DeliveryTest {
         $("button.button").click();
         $(".notification__title").shouldBe(visible, Duration.ofSeconds(15));
         $(".notification__content").shouldHave(exactText("Встреча успешно запланирована на " + firstMeetingDate));
-        $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.COMMAND + "a"), Keys.DELETE);
+        $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.CONTROL + "a"), Keys.DELETE);
         $("[data-test-id='date'] input").setValue(secondMeetingDate);
         $("button.button").click();
-        //$(byText("Запланировать") ).click();
+
         $("[data-test-id='replan-notification'] .notification__title").shouldBe(visible, Duration.ofSeconds(15));
         $("[data-test-id='replan-notification'] .notification__content")
                 .shouldHave(text("У вас уже запланирована встреча на другую дату. Перепланировать?"));
         $(byText("Перепланировать")).click();
         $(".notification__title").shouldBe(visible, Duration.ofSeconds(15));
-        //$("[data-test-id='success-notification'] .notification__content").shouldHave(text("Встреча успешно запланирована на " +secondMeetingDate));
+
         $("[data-test-id='success-notification'] .notification__content").shouldHave(exactText("Встреча успешно запланирована на " + secondMeetingDate));
 
 
